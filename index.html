@@ -26,7 +26,7 @@
         const loaderElement = document.getElementById('loader');
         let loadedModelsCount = 0; // Counter to track loaded models
         const totalModels = 2; // Total number of models to load
-
+        let play = 0
         function checkAllModelsLoaded() {
             if (loadedModelsCount === totalModels) {
                 // All models are loaded, hide the loader
@@ -40,12 +40,13 @@
                     nicoElement.style.transition = "color 1s ease, text-shadow 1s ease";
                     renderer.domElement.style.transition = "filter 1s ease"; // Transition over 1 second
                     renderer.domElement.style.filter = "blur(10px)";
+                    play = 1
                 }, 3000); // Delay of 3 seconds
                 setTimeout(() => {
                     renderer.domElement.style.filter = "none"; // Remove blur
                     nicoElement.style.animation = "none"; // Restart animation
                     void nicoElement.offsetWidth; // Trigger reflow to reset animation
-
+                    play = 0
                     startFlickerInterval();
                     nicoElement.style.textShadow = "-5px 0px 10px rgb(104 0 0)";
                 }, 4500);
@@ -112,7 +113,7 @@
         const nicoElement = document.querySelector("#nico");
 
         // Function to start the flicker interval
-        let play = 0
+
         function startFlickerInterval() {
             intervalId = setInterval(() => {
                 if (play == 0) {
@@ -137,7 +138,7 @@
         }
 
         // Start the interval initially
-        startFlickerInterval();
+
 
         // Event listener to toggle animation and apply blur
         nicoElement.addEventListener("click", () => {
