@@ -197,7 +197,7 @@
                 astronaut.position.copy(astronautBasePosition);
 
                 // Set the astronaut to face forward (negative Z-axis)
-                astronaut.rotation.y = Math.PI + 0.9; // Rotate 180 degrees around Y-axis
+                astronaut.rotation.y = Math.PI + 18; // Rotate 180 degrees around Y-axis
                 astronaut.rotation.x = 10
                 console.log("Astronaut loaded, positioned, and rotated:", astronautBasePosition);
             },
@@ -219,8 +219,8 @@
 
             // If the helmet is loaded
             if (helmet) {
-                helmet.rotation.y += 0.0004; // Rotate
-                helmet.rotation.x += 0.0001;
+                helmet.rotation.y += 0.0009; // Rotate
+                helmet.rotation.x += 0.0009;
 
                 // Oscillate around its base position
                 helmetFloatOffset += 0.001;
@@ -230,7 +230,7 @@
             // If the astronaut is loaded
             if (astronaut) {
                 astronaut.rotation.y += 0.0009; // Slower rotation
-                astronaut.rotation.x += 0.0003;
+                astronaut.rotation.x += 0.0009;
 
                 // Oscillate around its base position
                 astronautFloatOffset += 0.0005;
