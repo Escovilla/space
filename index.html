@@ -18,7 +18,9 @@
     </div>
 
     <div id="loader">Loading...
-        </br> <progress id="file" max="100"> </progress>
+        </br>
+        <div id="loaded" style="font-size: 10px !important; color: gray;"></div>
+        <progress id="file" max="100"> </progress>
 
     </div>
 
@@ -28,6 +30,7 @@
     <script>
         const loaderElement = document.getElementById('loader');
         const progressBar = document.getElementById('file');
+        const loaded = document.getElementById('loaded');
         let loadedModelsCount = 0; // Counter to track loaded models
         const totalModels = 2; // Total number of models to load
         let play = 0
@@ -90,7 +93,7 @@
                 console.log("progress: ", Math.ceil(progress))
                 progressBar.value = Math.ceil(progress); // Update the progress bar
 
-
+                loaded.innerHTML = `Loading: ${itemUrl} (${itemsLoaded}/${itemsTotal})`
                 console.log(`Loading: ${itemUrl} (${itemsLoaded}/${itemsTotal})`);
 
                 console.log("progressBar.value: ", progressBar.value)
