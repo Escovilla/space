@@ -1,0 +1,47 @@
+body {
+	margin: 0;
+	overflow: hidden;
+	background-color: black;
+}
+@font-face {
+	font-family: 'cool'; /* Name the font */
+	src: url('Hyper-Scrypt-master/fonts/HyperScrypt_Web/HyperScrypt-Stencil_web.ttf')
+		format('truetype');
+}
+
+canvas {
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	/* Ensure the canvas stays behind other elements */
+}
+
+#nico {
+	font-family: 'cool';
+	font-size: 200px !important;
+	letter-spacing: -1px;
+	font-weight: 1000;
+	position: relative;
+	z-index: 1;
+	color: #00000000; /* Fully transparent text */
+	text-align: right;
+	margin-top: 200px;
+	text-shadow: -5px 0px 10px rgb(104 0 0);
+	opacity: 0; /* Initially hidden */
+}
+/* Keyframes for flicker effect */
+@keyframes flicker {
+	0% {
+		text-shadow: -5px 0px 10px rgb(104, 0, 0, 1);
+	}
+	50% {
+		text-shadow: -5px 0px 20px rgb(168, 17, 17, 0.8);
+	}
+	100% {
+		text-shadow: -5px 0px 10px rgb(104, 0, 0, 0.9);
+	}
+}

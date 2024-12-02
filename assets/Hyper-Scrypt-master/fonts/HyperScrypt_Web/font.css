@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'Hyper Scrypt_Stencil';
+    src:    url('HyperScrypt-Stencil_web.eot');
+    src:    url('HyperScrypt-Stencil_web.eot?#iefix') format('embedded-opentype'),
+            url('HyperScrypt-Stencil_web.woff') format('woff'),
+            url('HyperScrypt-Stencil_web.woff2') format('woff2'),
+            url('HyperScrypt-Stencil_web.ttf') format('truetype'),
+            url('HyperScrypt-Stencil_web.svg#svgFontName') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

@@ -1,0 +1,11 @@
+Model Information:
+* title:	Astronaught
+* source:	https://sketchfab.com/3d-models/astronaught-e790a817f31f4cdf8cc2524c68d785a7
+* author:	WA7KVI (https://sketchfab.com/WA7KVI)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Astronaught" (https://sketchfab.com/3d-models/astronaught-e790a817f31f4cdf8cc2524c68d785a7) by WA7KVI (https://sketchfab.com/WA7KVI) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

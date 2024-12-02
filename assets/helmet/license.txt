@@ -1,0 +1,11 @@
+Model Information:
+* title:	Cosmonaut Helmet Revisited
+* source:	https://sketchfab.com/3d-models/cosmonaut-helmet-revisited-f95b375749d24a47be676447648aee1b
+* author:	Spencer Buffum (https://sketchfab.com/spencerbuffum27)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Cosmonaut Helmet Revisited" (https://sketchfab.com/3d-models/cosmonaut-helmet-revisited-f95b375749d24a47be676447648aee1b) by Spencer Buffum (https://sketchfab.com/spencerbuffum27) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
