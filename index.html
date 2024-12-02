@@ -30,11 +30,36 @@
         let loadedModelsCount = 0; // Counter to track loaded models
         const totalModels = 2; // Total number of models to load
         let play = 0
-        function checkAllModelsLoaded() {
-            if (loadedModelsCount === totalModels) {
-                // All models are loaded, hide the loader
-                loaderElement.style.display = 'none';
+        // function checkAllModelsLoaded() {
+        //     if (loadedModelsCount === totalModels) {
+        //         // All models are loaded, hide the loader
+        //         loaderElement.style.display = 'none';
 
+        //         const nicoElement = document.querySelector("#nico");
+        //         setTimeout(() => {
+        //             nicoElement.style.opacity = "1"; // Make it visible
+        //             nicoElement.style.opacity = "opacity 3s ease-in-out"; // Smooth fade-in
+        //             nicoElement.style.textShadow = "-5px 0px 0px rgb(104 0 0)";
+        //             nicoElement.style.transition = "color 1s ease, text-shadow 1s ease";
+        //             renderer.domElement.style.transition = "filter 1s ease"; // Transition over 1 second
+        //             renderer.domElement.style.filter = "blur(10px)";
+        //             play = 1
+        //         }, 3000); // Delay of 3 seconds
+        //         setTimeout(() => {
+        //             renderer.domElement.style.filter = "none"; // Remove blur
+        //             nicoElement.style.animation = "none"; // Restart animation
+        //             void nicoElement.offsetWidth; // Trigger reflow to reset animation
+        //             play = 0
+        //             startFlickerInterval();
+        //             nicoElement.style.textShadow = "-5px 0px 10px rgb(104 0 0)";
+        //         }, 4500);
+        //     }
+        // }
+        const loadingManager = new THREE.LoadingManager(
+            () => {
+                // All resources are loaded
+                console.log('All assets loaded');
+                loaderElement.style.display = 'none';
                 const nicoElement = document.querySelector("#nico");
                 setTimeout(() => {
                     nicoElement.style.opacity = "1"; // Make it visible
@@ -53,9 +78,17 @@
                     startFlickerInterval();
                     nicoElement.style.textShadow = "-5px 0px 10px rgb(104 0 0)";
                 }, 4500);
+            },
+            (itemUrl, itemsLoaded, itemsTotal) => {
+                // Update progress as each item is loaded
+                const progress = (itemsLoaded / itemsTotal) * 100;
+                progressBar.value = progress; // Update the progress bar
+                console.log(`Loading: ${itemUrl} (${itemsLoaded}/${itemsTotal})`);
+            },
+            (url) => {
+                console.error(`There was an error loading: ${url}`);
             }
-        }
-
+        );
 
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('assets/sw.js').then(() => {
@@ -197,7 +230,7 @@
         //         nicoElement.style.textShadow = "-5px 0px 10px rgb(104 0 0)";
         //     }, 4500);
         // });
-
+        const gltfLoader = new THREE.GLTFLoader(loadingManager);
         const loader = new THREE.GLTFLoader();
         let helmet, astronaut;
         let helmetBasePosition = new THREE.Vector3(); // Store base positions
@@ -206,7 +239,7 @@
         const progressBar = document.getElementById('file');
 
         // Load Helmet Model
-        loader.load(
+        gltfLoader.load(
             './assets/helmet/scene.gltf',
             function (gltf) {
                 helmet = gltf.scene;
@@ -219,7 +252,6 @@
                 console.log("Helmet loaded and positioned:", helmetBasePosition);
 
                 loadedModelsCount++;
-                checkAllModelsLoaded(); // Check if all models are loaded
             },
             function (xhr) {
                 // Update progress bar
@@ -232,7 +264,7 @@
         );
 
         // Load Astronaut Model
-        loader.load(
+        gltfLoader.load(
             './assets/astronaut/scene.gltf',
             function (gltf) {
                 astronaut = gltf.scene;
@@ -248,7 +280,6 @@
                 console.log("Astronaut loaded, positioned, and rotated:", astronautBasePosition);
 
                 loadedModelsCount++;
-                checkAllModelsLoaded(); // Check if all models are loaded
             },
             function (xhr) {
                 // Update progress bar
