@@ -41,7 +41,7 @@
                     renderer.domElement.style.transition = "filter 1s ease"; // Transition over 1 second
                     renderer.domElement.style.filter = "blur(10px)";
                     play = 1
-                }, 3000); // Delay of 3 seconds
+                }, 6000); // Delay of 3 seconds
                 setTimeout(() => {
                     renderer.domElement.style.filter = "none"; // Remove blur
                     nicoElement.style.animation = "none"; // Restart animation
@@ -49,7 +49,7 @@
                     play = 0
                     startFlickerInterval();
                     nicoElement.style.textShadow = "-5px 0px 10px rgb(104 0 0)";
-                }, 4500);
+                }, 7500);
             }
         }
 
