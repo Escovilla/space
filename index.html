@@ -17,7 +17,10 @@
         <p id="nico">Nico Escovilla</p>
     </div>
 
-    <div id="loader">Loading...</div>
+    <div id="loader">Loading...
+        </br> <progress id="file"> </progress>
+
+    </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/three@latest/build/three.min.js"></script>
@@ -41,7 +44,7 @@
                     renderer.domElement.style.transition = "filter 1s ease"; // Transition over 1 second
                     renderer.domElement.style.filter = "blur(10px)";
                     play = 1
-                }, 6000); // Delay of 3 seconds
+                }, 3000); // Delay of 3 seconds
                 setTimeout(() => {
                     renderer.domElement.style.filter = "none"; // Remove blur
                     nicoElement.style.animation = "none"; // Restart animation
@@ -49,7 +52,7 @@
                     play = 0
                     startFlickerInterval();
                     nicoElement.style.textShadow = "-5px 0px 10px rgb(104 0 0)";
-                }, 7500);
+                }, 4500);
             }
         }
 
@@ -175,30 +178,32 @@
 
 
 
-        window.addEventListener("load", () => {
-            const nicoElement = document.querySelector("#nico");
-            setTimeout(() => {
-                nicoElement.style.opacity = "1"; // Make it visible
-                nicoElement.style.opacity = "opacity 3s ease-in-out"; // Smooth fade-in
-                nicoElement.style.textShadow = "-5px 0px 0px rgb(104 0 0)";
-                nicoElement.style.transition = "color 1s ease, text-shadow 1s ease";
-                renderer.domElement.style.transition = "filter 1s ease"; // Transition over 1 second
-                renderer.domElement.style.filter = "blur(10px)";
-            }, 3000); // Delay of 3 seconds
-            setTimeout(() => {
-                renderer.domElement.style.filter = "none"; // Remove blur
-                nicoElement.style.animation = "none"; // Restart animation
-                void nicoElement.offsetWidth; // Trigger reflow to reset animation
+        // window.addEventListener("load", () => {
+        //     const nicoElement = document.querySelector("#nico");
+        //     setTimeout(() => {
+        //         nicoElement.style.opacity = "1"; // Make it visible
+        //         nicoElement.style.opacity = "opacity 3s ease-in-out"; // Smooth fade-in
+        //         nicoElement.style.textShadow = "-5px 0px 0px rgb(104 0 0)";
+        //         nicoElement.style.transition = "color 1s ease, text-shadow 1s ease";
+        //         renderer.domElement.style.transition = "filter 1s ease"; // Transition over 1 second
+        //         renderer.domElement.style.filter = "blur(10px)";
+        //     }, 3000); // Delay of 3 seconds
+        //     setTimeout(() => {
+        //         renderer.domElement.style.filter = "none"; // Remove blur
+        //         nicoElement.style.animation = "none"; // Restart animation
+        //         void nicoElement.offsetWidth; // Trigger reflow to reset animation
 
-                startFlickerInterval();
-                nicoElement.style.textShadow = "-5px 0px 10px rgb(104 0 0)";
-            }, 4500);
-        });
+        //         startFlickerInterval();
+        //         nicoElement.style.textShadow = "-5px 0px 10px rgb(104 0 0)";
+        //     }, 4500);
+        // });
 
         const loader = new THREE.GLTFLoader();
         let helmet, astronaut;
         let helmetBasePosition = new THREE.Vector3(); // Store base positions
         let astronautBasePosition = new THREE.Vector3();
+
+        const progressBar = document.getElementById('file');
 
         // Load Helmet Model
         loader.load(
@@ -216,7 +221,11 @@
                 loadedModelsCount++;
                 checkAllModelsLoaded(); // Check if all models are loaded
             },
-            undefined,
+            function (xhr) {
+                // Update progress bar
+                const progress = (xhr.loaded / xhr.total) * 50; // Allocate 50% for this model
+                progressBar.value = progress;
+            },
             function (error) {
                 console.error('An error occurred with helmet:', error);
             }
@@ -241,11 +250,18 @@
                 loadedModelsCount++;
                 checkAllModelsLoaded(); // Check if all models are loaded
             },
-            undefined,
+            function (xhr) {
+                // Update progress bar
+                const progress = 50 + (xhr.loaded / xhr.total) * 50; // Allocate another 50% for this model
+                progressBar.value = progress;
+            },
             function (error) {
                 console.error('An error occurred with astronaut:', error);
             }
         );
+        if (loadedModelsCount === totalModels) {
+            loaderElement.style.display = 'none'; // Hide loader
+        }
 
         // Camera position
         camera.position.z = 3.7;
