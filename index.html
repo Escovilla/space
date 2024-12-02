@@ -253,11 +253,7 @@
 
                 loadedModelsCount++;
             },
-            function (xhr) {
-                // Update progress bar
-                const progress = (xhr.loaded / xhr.total) * 50; // Allocate 50% for this model
-                progressBar.value = progress;
-            },
+
             function (error) {
                 console.error('An error occurred with helmet:', error);
             }
@@ -281,11 +277,7 @@
 
                 loadedModelsCount++;
             },
-            function (xhr) {
-                // Update progress bar
-                const progress = 50 + (xhr.loaded / xhr.total) * 50; // Allocate another 50% for this model
-                progressBar.value = progress;
-            },
+
             function (error) {
                 console.error('An error occurred with astronaut:', error);
             }
