@@ -31,6 +31,24 @@
             if (loadedModelsCount === totalModels) {
                 // All models are loaded, hide the loader
                 loaderElement.style.display = 'none';
+
+                const nicoElement = document.querySelector("#nico");
+                setTimeout(() => {
+                    nicoElement.style.opacity = "1"; // Make it visible
+                    nicoElement.style.opacity = "opacity 3s ease-in-out"; // Smooth fade-in
+                    nicoElement.style.textShadow = "-5px 0px 0px rgb(104 0 0)";
+                    nicoElement.style.transition = "color 1s ease, text-shadow 1s ease";
+                    renderer.domElement.style.transition = "filter 1s ease"; // Transition over 1 second
+                    renderer.domElement.style.filter = "blur(10px)";
+                }, 3000); // Delay of 3 seconds
+                setTimeout(() => {
+                    renderer.domElement.style.filter = "none"; // Remove blur
+                    nicoElement.style.animation = "none"; // Restart animation
+                    void nicoElement.offsetWidth; // Trigger reflow to reset animation
+
+                    startFlickerInterval();
+                    nicoElement.style.textShadow = "-5px 0px 10px rgb(104 0 0)";
+                }, 4500);
             }
         }
 
