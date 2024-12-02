@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Object with Three.js</title>
+    <link rel="stylesheet" type="text/css" href="assets/css.css">
+</head>
+
+<body>
+
+    <div>
+        <p id="nico">Nico Escovilla</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@latest/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@latest/examples/js/loaders/GLTFLoader.js"></script>
+    <script>
+
+        // const scene = new THREE.Scene();
+        // // scene.background = new THREE.Color(0x5e5e5e);
+        // const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, .27, 1000);
+        // const renderer = new THREE.WebGLRenderer();
+
+
+
+
+        // renderer.setSize(window.innerWidth, window.innerHeight);
+        // document.body.appendChild(renderer.domElement);
+
+        // // Lighting
+        // const redLight = new THREE.PointLight(0x5e5e5e, 30, 1100);
+        // redLight.position.set(0, 20, 10);
+        // scene.add(redLight);
+
+        // const blueLightLeft = new THREE.PointLight(0x0000ff, 90, 1100);  // Change 0x0000ff to 0xffffff for white light
+        // // blueLightLeft.position.set(-10, -10, 10);
+        // // scene.add(blueLightLeft);
+
+        // const blueLightRight = new THREE.PointLight(0xffffff, 90, 1100);
+        // blueLightRight.position.set(10, -10, 10);
+        // scene.add(blueLightRight);
+
+
+        // // Load 3D object
+        // const loader = new THREE.GLTFLoader();
+        // let helmet;
+
+        // loader.load(
+        //     './assets/helmet/scene.gltf', // Replace with your model's path
+        //     function (gltf) {
+        //         helmet = gltf.scene;
+        //         scene.add(helmet);
+        //         helmet.position.set(-2, 0, 0); // Initial position
+        //     },
+        //     undefined,
+        //     function (error) {
+        //         console.error('An error occurred:', error);
+        //     }
+        // );
+
+        // // Camera position
+        // camera.position.z = 3.7;
+
+        // // Animate the scene
+        // let floatSpeed = 0.00000001; // Adjust for slower or faster floating
+        // let floatOffset = 0;
+
+        // function animate() {
+        //     requestAnimationFrame(animate);
+
+        //     // If the helmet is loaded
+        //     if (helmet) {
+        //         // Make it rotate
+        //         helmet.rotation.y += 0.0004;
+        //         helmet.rotation.x += 0.0005;
+
+        //         // Oscillate it up and down to simulate floating
+        //         floatOffset += floatSpeed;
+        //         helmet.position.y = Math.sin(floatOffset) * 0.1; // Adjust amplitude if needed
+        //     }
+
+        //     renderer.render(scene, camera);
+        // }
+
+        // animate();
+
+        // // Resize handling
+        // window.addEventListener('resize', () => {
+        //     camera.aspect = window.innerWidth / window.innerHeight;
+        //     camera.updateProjectionMatrix();
+        //     renderer.setSize(window.innerWidth, window.innerHeight);
+        // });
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.27, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Lighting
+        const redLight = new THREE.PointLight(0xff0000, 30, 1100);
+        redLight.position.set(0, 20, 10);
+        scene.add(redLight);
+
+        const blueLightRight = new THREE.PointLight(0xff0000, 90, 1100);
+        blueLightRight.position.set(10, -10, 10);
+        scene.add(blueLightRight);
+
+        const l2 = new THREE.PointLight(0x0000ff, .9);
+        l2.position.set(1.2, 2, 0);
+        scene.add(l2);
+
+        // Models
+
+
+        const light = new THREE.PointLight(0xff0000, 10, 10); // Blue light, intensity 1
+
+        light.position.set(1.2, 4, 0);
+        scene.add(light);
+
+        function startFlicker() {
+            const flickerDuration = 500; // Flicker lasts 500ms
+            const flickerInterval = 100; // Flicker happens quickly within the 500ms
+
+            let flickerCount = 0;
+            const maxFlickers = flickerDuration / flickerInterval;
+
+            // Temporary flickering effect
+            const flickerTimer = setInterval(() => {
+                light.intensity = Math.random() * 2; // Randomize light intensity
+                flickerCount++;
+
+                if (flickerCount >= maxFlickers) {
+                    clearInterval(flickerTimer);
+                    light.intensity = 0; // Reset to original intensity
+                }
+            }, flickerInterval);
+        }
+
+        // Trigger flicker every 5 seconds
+        setInterval(() => {
+            startFlicker(); // Trigger Three.js flicker
+            document.querySelector("#nico").style.animation = "none"; // Restart animation
+            void document.querySelector("#nico").offsetWidth; // Trigger reflow to reset animation
+            document.querySelector("#nico").style.animation = "flicker 0.5s steps(2, start)";
+        }, 5000);
+
+
+        const loader = new THREE.GLTFLoader();
+        let helmet, astronaut;
+        let helmetBasePosition = new THREE.Vector3(); // Store base positions
+        let astronautBasePosition = new THREE.Vector3();
+
+        // Load Helmet Model
+        loader.load(
+            './assets/helmet/scene.gltf',
+            function (gltf) {
+                helmet = gltf.scene;
+                scene.add(helmet);
+                helmetBasePosition.set(-2, -1, 0.009); // Set base position
+                helmet.position.copy(helmetBasePosition); // Apply base position
+                console.log("Helmet loaded and positioned:", helmetBasePosition);
+            },
+            undefined,
+            function (error) {
+                console.error('An error occurred with helmet:', error);
+            }
+        );
+
+        // Load Astronaut Model
+        loader.load(
+            './assets/astronaut/scene.gltf',
+            function (gltf) {
+                astronaut = gltf.scene;
+                scene.add(astronaut);
+
+                // Set base position
+                astronautBasePosition.set(3.4, 2, 0);
+                astronaut.position.copy(astronautBasePosition);
+
+                // Set the astronaut to face forward (negative Z-axis)
+                astronaut.rotation.y = Math.PI + 0.9; // Rotate 180 degrees around Y-axis
+                astronaut.rotation.x = 10
+                console.log("Astronaut loaded, positioned, and rotated:", astronautBasePosition);
+            },
+            undefined,
+            function (error) {
+                console.error('An error occurred with astronaut:', error);
+            }
+        );
+
+        // Camera position
+        camera.position.z = 3.7;
+
+        // Animate the scene
+        let helmetFloatOffset = 0;
+        let astronautFloatOffset = 0;
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // If the helmet is loaded
+            if (helmet) {
+                helmet.rotation.y += 0.0004; // Rotate
+                helmet.rotation.x += 0.0004;
+
+                // Oscillate around its base position
+                helmetFloatOffset += 0.001;
+                helmet.position.y = helmetBasePosition.y + Math.sin(helmetFloatOffset) * 0.1; // Float up and down
+            }
+
+            // If the astronaut is loaded
+            if (astronaut) {
+                astronaut.rotation.y += 0.0009; // Slower rotation
+                astronaut.rotation.x += 0.0003;
+
+                // Oscillate around its base position
+                astronautFloatOffset += 0.0005;
+                astronaut.position.y = astronautBasePosition.y + Math.sin(astronautFloatOffset) * 0.0; // Float up and down
+                astronaut.position.x = astronautBasePosition.x + Math.sin(astronautFloatOffset) * 0.0; // Slight left/right movement
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Resize handling
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+
+    </script>
+</body>
+
+</html>
