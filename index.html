@@ -18,7 +18,7 @@
     </div>
 
     <div id="loader">Loading...
-        </br> <progress id="file"> </progress>
+        </br> <progress id="file" max="100"> </progress>
 
     </div>
 
@@ -82,9 +82,18 @@
             },
             (itemUrl, itemsLoaded, itemsTotal) => {
                 // Update progress as each item is loaded
+
+
+
                 const progress = (itemsLoaded / itemsTotal) * 100;
-                progressBar.value = progress; // Update the progress bar
+
+                console.log("progress: ", Math.ceil(progress))
+                progressBar.value = Math.ceil(progress); // Update the progress bar
+
+
                 console.log(`Loading: ${itemUrl} (${itemsLoaded}/${itemsTotal})`);
+
+                console.log("progressBar.value: ", progressBar.value)
             },
             (url) => {
                 console.error(`There was an error loading: ${url}`);
@@ -211,26 +220,6 @@
         });
 
 
-
-        // window.addEventListener("load", () => {
-        //     const nicoElement = document.querySelector("#nico");
-        //     setTimeout(() => {
-        //         nicoElement.style.opacity = "1"; // Make it visible
-        //         nicoElement.style.opacity = "opacity 3s ease-in-out"; // Smooth fade-in
-        //         nicoElement.style.textShadow = "-5px 0px 0px rgb(104 0 0)";
-        //         nicoElement.style.transition = "color 1s ease, text-shadow 1s ease";
-        //         renderer.domElement.style.transition = "filter 1s ease"; // Transition over 1 second
-        //         renderer.domElement.style.filter = "blur(10px)";
-        //     }, 3000); // Delay of 3 seconds
-        //     setTimeout(() => {
-        //         renderer.domElement.style.filter = "none"; // Remove blur
-        //         nicoElement.style.animation = "none"; // Restart animation
-        //         void nicoElement.offsetWidth; // Trigger reflow to reset animation
-
-        //         startFlickerInterval();
-        //         nicoElement.style.textShadow = "-5px 0px 10px rgb(104 0 0)";
-        //     }, 4500);
-        // });
         const gltfLoader = new THREE.GLTFLoader(loadingManager);
         const loader = new THREE.GLTFLoader();
         let helmet, astronaut;
@@ -254,7 +243,7 @@
 
                 loadedModelsCount++;
             },
-
+            undefined,
             function (error) {
                 console.error('An error occurred with helmet:', error);
             }
@@ -278,7 +267,7 @@
 
                 loadedModelsCount++;
             },
-
+            undefined,
             function (error) {
                 console.error('An error occurred with astronaut:', error);
             }
