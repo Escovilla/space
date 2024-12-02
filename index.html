@@ -27,6 +27,7 @@
     <script src="https://cdn.jsdelivr.net/npm/three@latest/examples/js/loaders/GLTFLoader.js"></script>
     <script>
         const loaderElement = document.getElementById('loader');
+        const progressBar = document.getElementById('file');
         let loadedModelsCount = 0; // Counter to track loaded models
         const totalModels = 2; // Total number of models to load
         let play = 0
@@ -236,7 +237,7 @@
         let helmetBasePosition = new THREE.Vector3(); // Store base positions
         let astronautBasePosition = new THREE.Vector3();
 
-        const progressBar = document.getElementById('file');
+
 
         // Load Helmet Model
         gltfLoader.load(
