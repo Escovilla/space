@@ -1,4 +1,4 @@
-body {
+#bod {
 	margin: 0;
 	overflow: hidden;
 	background-color: black;
@@ -8,14 +8,16 @@ body {
 	src: url('Hyper-Scrypt-master/fonts/HyperScrypt_Web/HyperScrypt-Stencil_web.ttf')
 		format('truetype');
 }
-
+#landing {
+	height: 130vh;
+}
 canvas {
 	display: block;
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 100%;
+	height: 120vh;
 	z-index: -1;
 	/* Ensure the canvas stays behind other elements */
 }
@@ -36,10 +38,10 @@ canvas {
 /* Keyframes for flicker effect */
 @keyframes flicker {
 	0% {
-		text-shadow: -5px 0px 10px rgb(104, 0, 0, 1);
+		text-shadow: -5px 0px 10px rgb(255, 9, 9);
 	}
 	50% {
-		text-shadow: -5px 0px 20px rgb(168, 17, 17, 0.8);
+		text-shadow: -5px 0px 20px rgba(188, 15, 15, 0.8);
 	}
 	100% {
 		text-shadow: -5px 0px 10px rgb(104, 0, 0, 0.9);
@@ -83,4 +85,7 @@ progress::-webkit-progress-value {
 }
 progress::-moz-progress-bar {
 	/* style rules */
+}
+#bfg {
+	border: 2px solid GREEN; /* Visual debugging */
 }

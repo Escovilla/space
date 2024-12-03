@@ -1,10 +1,7 @@
 self.addEventListener('install', (event) => {
 	event.waitUntil(
 		caches.open('gltf-cache').then((cache) => {
-			return cache.addAll([
-				'./helmet/scene.gltf',
-				'./astronaut/scene.gltf',
-			]);
+			return cache.addAll(['./bfg/scene.gltf', './astronaut/scene.gltf']);
 		})
 	);
 });
