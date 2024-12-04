@@ -108,7 +108,7 @@
         blueLightRight.position.set(10, -10, 10);
         scene.add(blueLightRight);
 
-        const l2 = new THREE.PointLight(0x0000ff, .9);
+        const l2 = new THREE.PointLight(0x0000ff, 90);
         l2.position.set(1.2, 2, 0);
         scene.add(l2);
 
@@ -155,7 +155,7 @@
 
         // Load Helmet Model
         loader.load(
-            './assets/bfg/scene.gltf',
+            './assets/earth/scene.gltf',
             function (gltf) {
                 helmet = gltf.scene;
                 scene.add(helmet);
