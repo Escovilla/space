@@ -132,6 +132,25 @@ function resetCameraPosition() {
 	camera2.lookAt(0, 0, 0); // Refocus the camera
 	focusCameraOnObject(helmet2); // Update the controls target to the helmet's position
 }
+
+let isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+if (isTouchDevice) {
+	// Disable controls during touch events to allow scrolling
+	const handleTouchStart = () => {
+		controls.enabled = false; // Disable OrbitControls
+	};
+
+	const handleTouchEnd = () => {
+		controls.enabled = true; // Re-enable OrbitControls
+	};
+
+	// Attach touch event listeners
+	window.addEventListener('touchstart', handleTouchStart);
+	window.addEventListener('touchend', handleTouchEnd);
+}
+
+// Ensure scroll interaction works with other input types as well
 function startScrollCamera() {
 	if (isScrollHandlerActive) return; // Prevent multiple bindings
 
@@ -141,7 +160,8 @@ function startScrollCamera() {
 		const scrollTop =
 			window.pageYOffset || document.documentElement.scrollTop;
 
-		if (camera2.position.x > 0.007) {
+		// Only update camera position when controls are disabled
+		if (!controls.enabled) {
 			if (scrollTop > lastScrollTop) {
 				// Scrolling down
 				camera2.position.z += 0.0005; // Move camera away (increase Z position)
