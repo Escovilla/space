@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Object with Three.js</title>
+    <link rel="stylesheet" type="text/css" href="assets/css.css">
+</head>
+
+<body>
+
+    <div>
+        <p id="nico">Nico Escovilla</p>
+    </div>
+    <div id="bl"></div>
+    <script src="https://cdn.jsdelivr.net/npm/three@latest/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@latest/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@latest/examples/js/controls/OrbitControls.js"></script>
+
+    <script>
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.27, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Lighting
+
+
+        const loader = new THREE.GLTFLoader();
+        let helmet, astronaut;
+        let helmetBasePosition = new THREE.Vector3(); // Store base positions
+        let astronautBasePosition = new THREE.Vector3();
+
+        // Load Helmet Model
+        loader.load(
+            './assets/blackhole/scene.gltf',
+            function (gltf) {
+                helmet = gltf.scene;
+                scene.add(helmet);
+                helmetBasePosition.set(1.2, 0, 4); // Set base position
+                helmet.position.copy(helmetBasePosition); // Apply base position
+                helmet.rotation.y = 243.13999999992353; // Rotate 180 degrees around Y-axis
+                helmet.rotation.x = Math.PI + 3.1
+                // helmet.rotation.z = 6.1
+
+
+
+                console.log("Helmet loaded and positioned:", helmetBasePosition);
+            },
+            undefined,
+            function (error) {
+                console.error('An error occurred with helmet:', error);
+            }
+        );
+
+        // Load Astronaut Model
+
+
+        // Camera position
+        camera.position.z = 3.7;
+
+        // Animate the scene
+        let helmetFloatOffset = 0;
+        let astronautFloatOffset = 0;
+        let cameraAngle = 0; // Initial angle in radians
+        const cameraRadius = 5; // Distance from the center (orbit radius)
+        const cameraSpeed = 0.001;
+
+        const stopAfter = 13000; // Stop animation after 10 seconds (in milliseconds)
+        const startTime = Date.now(); // Track the start time
+
+
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Animate the camera in a circular motion around the scene
+
+
+
+            const elapsedTime = Date.now() - startTime;
+
+            // Stop updating the camera after 10 seconds
+            if (elapsedTime < stopAfter) {
+                cameraAngle += cameraSpeed; // Increment the angle
+                camera.position.x += 0.001 // Update X position
+                camera.position.z += 0.001 // Update Z position
+                camera.lookAt(0, 0, 0); // Keep the camera focused on the center of the scene
+            }
+
+            // If the helmet is loaded
+            if (helmet) {
+                helmet.rotation.y += 0.01; // Rotate
+                helmet.position.y = helmetBasePosition.y + Math.sin(helmetFloatOffset) * 0.1; // Float
+            }
+
+
+            renderer.render(scene, camera);
+        }
+        // const controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+        // Optional: Set control limits (e.g., zoom or rotation constraints)
+
+        animate()
+
+
+        // Resize handling
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+
+        const scene2 = new THREE.Scene();
+        const camera2 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.27, 1000);
+        const renderer2 = new THREE.WebGLRenderer();
+        renderer2.setSize(window.innerWidth, window.innerHeight);
+
+        // Append the renderer to the element with id="bl"
+        const container2 = document.getElementById("bl");
+        if (container2) {
+            container2.appendChild(renderer2.domElement);
+        } else {
+            console.error('Element with id="bl" not found.');
+        }
+
+        // Lighting
+
+        const loader2 = new THREE.GLTFLoader();
+        let helmet2, astronaut2;
+        let helmetBasePosition2 = new THREE.Vector3(); // Store base positions
+        let astronautBasePosition2 = new THREE.Vector3();
+
+        // Load Helmet Model
+        loader2.load(
+            './assets/blackhole/scene.gltf',
+            function (gltf) {
+                helmet2 = gltf.scene;
+                scene2.add(helmet2);
+                helmetBasePosition2.set(1.2, 0, 4); // Set base position
+                helmet2.position.copy(helmetBasePosition2); // Apply base position
+                helmet2.rotation.y = 243.13999999992353; // Rotate 180 degrees around Y-axis
+                helmet2.rotation.x = Math.PI + 3.1;
+                // helmet2.rotation.z = 6.1
+
+                console.log("Helmet loaded and positioned:", helmetBasePosition2);
+            },
+            undefined,
+            function (error) {
+                console.error('An error occurred with helmet2:', error);
+            }
+        );
+
+        // Camera position
+        camera2.position.z = 3.7;
+
+        // Animate the scene
+        let helmetFloatOffset2 = 0;
+        let astronautFloatOffset2 = 0;
+        let cameraAngle2 = 0; // Initial angle in radians
+        const cameraRadius2 = 5; // Distance from the center (orbit radius)
+        const cameraSpeed2 = 0.001;
+
+        const stopAfter2 = 13000; // Stop animation after 10 seconds (in milliseconds)
+        const startTime2 = Date.now(); // Track the start time
+
+        function animate2() {
+            requestAnimationFrame(animate2);
+
+            const elapsedTime2 = Date.now() - startTime2;
+
+            // Stop updating the camera after 10 seconds
+            if (elapsedTime2 < stopAfter2) {
+                cameraAngle2 += cameraSpeed2; // Increment the angle
+                camera2.position.x += 0.001; // Update X position
+                camera2.position.z += 0.001; // Update Z position
+                camera2.lookAt(0, 0, 0); // Keep the camera focused on the center of the scene
+            }
+
+            // If the helmet is loaded
+            if (helmet2) {
+                helmet2.rotation.y += 0.01; // Rotate
+                helmet2.position.y = helmetBasePosition2.y + Math.sin(helmetFloatOffset2) * 0.1; // Float
+            }
+
+            renderer2.render(scene2, camera2);
+        }
+
+        // Start animation
+        animate2();
+
+    </script>
+</body>
+
+</html>
