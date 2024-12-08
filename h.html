@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Object with Three.js</title>
+    <link rel="stylesheet" type="text/css" href="assets/css.css">
+</head>
+
+<body>
+
+    <div>
+        <p id="nico">Nico Escovilla</p>
+    </div>
+    <div id="bl"></div>
+    <script src="https://cdn.jsdelivr.net/npm/three@latest/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@latest/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@latest/examples/js/controls/OrbitControls.js"></script>
+
+    <script>
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.27, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Lighting
+
+
+        const loader = new THREE.GLTFLoader();
+        let helmet, astronaut;
+        let helmetBasePosition = new THREE.Vector3(); // Store base positions
+        let astronautBasePosition = new THREE.Vector3();
+
+        // Load Helmet Model
+        loader.load(
+            './assets/black_hole/scene.gltf',
+            function (gltf) {
+                helmet = gltf.scene;
+                scene.add(helmet);
+                helmetBasePosition.set(0, 0, 0); // Set base position
+                // helmet.position.copy(helmetBasePosition); // Apply base position
+                // helmet.rotation.y = 243.13999999992353; // Rotate 180 degrees around Y-axis
+                // helmet.rotation.x = Math.PI + 3.1
+                // helmet.rotation.z = 6.1
+
+
+
+                console.log("Helmet loaded and positioned:", helmetBasePosition);
+            },
+            undefined,
+            function (error) {
+                console.error('An error occurred with helmet:', error);
+            }
+        );
+
+        // Load Astronaut Model
+
+
+
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+
+
+            renderer.render(scene, camera);
+        }
+        // const controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+        // Optional: Set control limits (e.g., zoom or rotation constraints)
+
+        animate()
+
+
+        // Resize handling
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+
+    </script>
+</body>
+
+</html>
