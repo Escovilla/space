@@ -6,12 +6,12 @@ const camera3 = new THREE.PerspectiveCamera(
 	0.1,
 	1000
 );
-camera3.position.set(0, 0, 0); // Set initial camera position inside the object
+camera3.position.set(0, 0, 10); // Set initial camera position inside the object
 
 const renderer3 = new THREE.WebGLRenderer({
 	antialias: true,
-	precision: 'highp',
-	powerPreference: 'high-performance',
+	// precision: 'highp',
+	// powerPreference: 'high-performance',
 });
 
 const devicePixelRatio = window.devicePixelRatio || 1; // Account for high-DPI displays
@@ -31,38 +31,72 @@ if (container3) {
 
 // Lighting
 // helmet3.position.set(-0.2, -1.5, -2.5); // Adjust as necessary
-const lg1 = new THREE.PointLight(0xffffff, 2, 10);
-lg1.position.set(0, -1.4, -10);
+const lg1 = new THREE.PointLight(0xffffff, 2, 5);
+lg1.position.set(0, -2, -11);
 scene3.add(lg1);
 
-const lg2 = new THREE.PointLight(0xffffff, 2, 1);
-lg2.position.set(0, -1.4, -8);
+const lg2 = new THREE.PointLight(0xffffff, 2, 5);
+lg2.position.set(0, -2, -9);
 scene3.add(lg2);
 
-const lg3 = new THREE.PointLight(0xffffff, 2, 1);
-lg3.position.set(0, -1.4, -6);
+const lg3 = new THREE.PointLight(0xffffff, 2, 5);
+lg3.position.set(0, -1.7, -6);
 scene3.add(lg3);
 
-const lg4 = new THREE.PointLight(0xffffff, 5, 1);
-lg4.position.set(0, -1.4, -4);
+const lg4 = new THREE.PointLight(0xffffff, 1, 5);
+lg4.position.set(0, -2, 0);
 scene3.add(lg4);
-const lg5 = new THREE.PointLight(0xffffff, 5, 1);
-lg5.position.set(0, -1.4, -2);
+
+const lg5 = new THREE.PointLight(0xffffff, 1, 5);
+lg5.position.set(0, -2, 10);
 scene3.add(lg5);
 
-const blueLightRight3 = new THREE.PointLight(0x0000ff, 9, 1000);
-blueLightRight3.position.set(0, -1.4, -9);
+const lg6 = new THREE.PointLight(0xffffff, 1, 5);
+lg6.position.set(0, -2, 7);
+scene3.add(lg6);
+
+function flickerLight() {
+	const originalIntensity = 1; // Define the base intensity
+	const flickerDuration = 500; // Flicker duration in milliseconds
+
+	// Start flickering
+	const flickerInterval = setInterval(() => {
+		lg3.intensity = 0.2 + Math.random() * 0.2;
+		lg2.intensity = 0.5 + Math.random() * 0.7;
+		lg1.intensity = 0.5 + Math.random() * 0.7;
+		lg5.intensity = 0.5 + Math.random() * 0.7; // Flicker intensity range
+		lg6.intensity = 0.5 + Math.random() * 0.7; // Flicker intensity range
+	}, 50); // Adjust for faster flicker rate
+
+	// Stop flickering after the defined duration
+	setTimeout(() => {
+		clearInterval(flickerInterval);
+		lg3.intensity = Math.random() < 0.5 ? 5 : 0;
+		lg2.intensity = 2;
+		lg1.intensity = 2;
+		lg5.intensity = originalIntensity; // Reset to original intensity
+		lg6.intensity = originalIntensity; // Reset to original intensity
+	}, flickerDuration);
+}
+
+// Trigger the flickering effect every 5 seconds
+setInterval(flickerLight, 5000);
+
+// Start the flickering effect
+
+const blueLightRight3 = new THREE.PointLight(0x0000ff, 2, 5);
+blueLightRight3.position.set(0, -3, -9);
 scene3.add(blueLightRight3);
 
-const blueLightRight4 = new THREE.PointLight(0x0000ff, 9, 1000);
-blueLightRight4.position.set(0, -1, -2.5);
+const blueLightRight4 = new THREE.PointLight(0x0000ff, 1, 1);
+blueLightRight4.position.set(0, -3, -2.5);
 scene3.add(blueLightRight4);
 
-const outsideLight = new THREE.PointLight(0xff0000, 10, 100);
+const outsideLight = new THREE.PointLight(0xff0000, 2, 20);
 outsideLight.position.set(-4, 1, -10);
 scene3.add(outsideLight);
 
-const outsideLight3 = new THREE.PointLight(0xff0000, 10, 100);
+const outsideLight3 = new THREE.PointLight(0xff0000, 2, 20);
 outsideLight3.position.set(-4, 0.1, -4);
 scene3.add(outsideLight3);
 
@@ -75,10 +109,8 @@ scene3.add(controls3.getObject()); // Add the controls object to the scene
 // Lock the pointer on click or long press
 let lockTimeout;
 document.addEventListener('mousedown', () => {
-	lockTimeout = setTimeout(() => {
-		controls3.lock();
-		// bod.style.overflow = 'hidden';
-	}, 100); // Lock pointer after 500ms of holding down
+	controls3.lock();
+	// bod.style.overflow = 'hidden';
 });
 
 document.addEventListener('mouseup', () => {
@@ -149,8 +181,11 @@ loader3.load(
 		helmet3.rotation.y = THREE.MathUtils.degToRad(90); // 90 degrees in radians
 
 		const helmetClone = helmet3.clone();
-		helmetClone.position.set(-0.2, 5, 12.5); // Position the clone elsewhere
-		helmetClone.rotation.x = THREE.MathUtils.degToRad(30);
+
+		// Rotate the clone in the opposite direction to the original helmet
+		helmetClone.rotation.y = -helmet3.rotation.y;
+		helmetClone.position.x = helmet3.position.x + 0.4; // Small movement on x-axis
+		helmetClone.position.z = helmet3.position.z + 3.2; // S
 		scene3.add(helmetClone);
 
 		console.log('Model loaded and positioned.');
@@ -190,7 +225,7 @@ const bounds = {
 	minX: -0.7, // Adjust these values to match your object's confines
 	maxX: 0.7,
 	minZ: -11,
-	maxZ: 0,
+	maxZ: 10,
 	minY: 0, // Optional: Add Y-axis constraints if needed
 	maxY: 0,
 };
