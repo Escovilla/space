@@ -99,30 +99,36 @@ window.addEventListener('resize', () => {
 	renderer.setSize(window.innerWidth, newHeight);
 });
 // Lighting
-const redLight = new THREE.PointLight(0xff0000, 50, 1100);
+const redLight = new THREE.PointLight(0xff0000, 50, 100);
 redLight.position.set(0, 20, 10);
 scene.add(redLight);
 
-const blueLightRight = new THREE.PointLight(0xff0000, 90, 1100);
+const blueLightRight = new THREE.PointLight(0xff0000, 90, 100);
 blueLightRight.position.set(10, -10, 10);
 scene.add(blueLightRight);
 
-const l2 = new THREE.PointLight(0x0000ff, 100);
+const l2 = new THREE.PointLight(0x0000ff, 10);
 l2.position.set(1.2, 2, 14);
 scene.add(l2);
 
-const l3 = new THREE.PointLight(0xff0000, 100);
+const l3 = new THREE.PointLight(0xff0000, 10);
 l3.position.set(1.2, 2, 20);
 scene.add(l3);
 
-const l4 = new THREE.PointLight(0x00ff00, 100);
+const l4 = new THREE.PointLight(0x00ff00, 10);
 l4.position.set(1.2, 2, 20);
 scene.add(l4);
 
 
-const MAIN = new THREE.PointLight(0xffffff, 100, 1000);
-MAIN.position.set(1.2, 2, 20);
+const MAIN = new THREE.PointLight(0xffffff, 1000, 1000000);
+MAIN.position.set(-30, 2, 20);
 scene.add(MAIN);
+const redLightM = new THREE.PointLight(0xff0000, 1000, 1000000);
+redLightM.position.set(-30, 2, 20);
+scene.add(redLightM);
+const blueLightRightM = new THREE.PointLight(0x0000ff, 1000, 1000000);
+blueLightRightM.position.set(-30, 2, 20);
+scene.add(blueLightRightM);
 
 // Models
 
@@ -224,11 +230,12 @@ gltfLoader.load(
 	function (gltf) {
 		helmet = gltf.scene;
 		scene.add(helmet);
-		helmetBasePosition.set(-1.9, 10	, -30); // Set base position
+		helmetBasePosition.set(-25, 23, -50); // Set base position
 
 		helmet.position.copy(helmetBasePosition); // Apply base position
 		helmet.rotation.y = 0; // Rotate 180 degrees around Y-axis
 		helmet.rotation.x = 0;
+		helmet.scale.set(0.5, 0.5, 0.5); //
 		console.log('Helmet loaded and positioned:', helmetBasePosition);
 
 		loadedModelsCount++;
@@ -281,7 +288,7 @@ function animate() {
 
 	// If the helmet is loaded
 	if (helmet) {
-		helmet.rotation.y += 0.0009; // Rotate
+		helmet.rotation.y += 0.00009; // Rotate
 		helmet.rotation.x += 0.0009;
 
 		// Oscillate around its base position
