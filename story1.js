@@ -119,6 +119,11 @@ const l4 = new THREE.PointLight(0x00ff00, 100);
 l4.position.set(1.2, 2, 20);
 scene.add(l4);
 
+
+const MAIN = new THREE.PointLight(0xffffff, 100, 1000);
+MAIN.position.set(1.2, 2, 20);
+scene.add(MAIN);
+
 // Models
 
 const light = new THREE.PointLight(0xffffff, 0, 0); // Blue light, intensity 1
@@ -215,11 +220,11 @@ let astronautBasePosition = new THREE.Vector3();
 
 // Load Helmet Model
 gltfLoader.load(
-	'./assets/helmet/scene.gltf',
+	'./assets/la_station_spatiale_internationale_iss/scene.gltf',
 	function (gltf) {
 		helmet = gltf.scene;
 		scene.add(helmet);
-		helmetBasePosition.set(-1.9, -0.2, -0.3); // Set base position
+		helmetBasePosition.set(-1.9, 10	, -30); // Set base position
 
 		helmet.position.copy(helmetBasePosition); // Apply base position
 		helmet.rotation.y = 0; // Rotate 180 degrees around Y-axis
